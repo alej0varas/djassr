@@ -1,0 +1,7 @@
+*.pyc
+*~
+/.eggs/
+/README.pdf
+/__pycache__/
+/dist/
+/django_assr.egg-info/
