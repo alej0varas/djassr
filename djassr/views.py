@@ -14,7 +14,8 @@ class BaseGetSignature(generics.GenericAPIView):
         args = self._get_args(request)
         valid = self.get_valid(request)
         signer = self.signer()
-        data = signer.get_signed_url(*args, valid)
+        args = list(args) + [valid]
+        data = signer.get_signed_url(*args)
         return Response(data)
 
     def get_valid(self, request):
