@@ -48,8 +48,8 @@ class APIViewsTestCase(TestCase):
 
     def test_get_GET_signature(self):
         view = views.GetGETSignature.as_view()
-        url = 'a-s3-url'
-        data = {'url': url}
+        object_name = 'object_name.txt'
+        data = {'object_name': object_name}
         request = self.factory.post('/the-view/', data=data)
 
         with patch('djassr.views.s3sign.S3GETSigner.get_signed_url') as mock_signer:
@@ -58,4 +58,4 @@ class APIViewsTestCase(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('canary', response.data)
-        mock_signer.assert_called_once_with(url, views.DEFAULT_VALID)
+        mock_signer.assert_called_once_with(object_name, views.DEFAULT_VALID)

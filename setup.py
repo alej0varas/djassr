@@ -9,8 +9,8 @@ setup(
     description="Django AWS S3 Signed Requests API with Django Rest Framework",
     url='https://github.com/alej0varas/djassr',
     packages=('djassr', ),
-    install_requires=['s3sign==0.1.1'],
-    tests_require=['s3sign==0.1.1', 'django==1.9.7', 'djangorestframework==3.3.3'],
+    install_requires=['s3sign==0.2.0'],
+    tests_require=['s3sign==0.2.0', 'django==1.9.7', 'djangorestframework==3.3.3'],
     test_suite='runtests',
     classifiers=[
         'Development Status :: 3 - Alpha',

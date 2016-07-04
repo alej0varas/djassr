@@ -46,4 +46,4 @@ class GetGETSignature(BaseGetSignature):
     signer = s3sign.S3GETSigner
 
     def _get_args(self, request):
-        return (request.POST.get('url'), )
+        return (request.POST.get('object_name'), )
