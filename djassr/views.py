@@ -1,3 +1,6 @@
+import urllib
+import uuid
+
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -26,9 +29,16 @@ class BaseGetPUTSigneature(BaseGetSignature):
     serializer_class = serializers.PUTSignatureSerializer
 
     def _get_args(self, request):
-        file_name = request.POST.get('file_name')
+        file_name = self.get_object_name(request)
         mime_type = request.POST.get('mime_type')
         return file_name, mime_type
+
+    def get_object_name(self, request):
+        file_name = request.POST.get('file_name')
+        extension = file_name.split('.')[-1]
+        file_name = str(uuid.uuid4()) + '.' + extension
+        object_name = urllib.parse.quote_plus(file_name)
+        return object_name
 
 
 class GetPUTSignature(BaseGetPUTSigneature):

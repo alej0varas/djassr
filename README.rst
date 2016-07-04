@@ -14,7 +14,7 @@ Example `views.py`
        permission_classes = (IsAuthenticated,)
 
 .. note::
-   File names are replaced by a `uuid.uuid4` + the extension. For example "myfile.png" will become "7afad9bc-00d3-46ed-86bf-5ccc52eebd50.png".
+   File names are replaced by a `uuid.uuid4` + the extension. For example "myfile.png" will become "7afad9bc-00d3-46ed-86bf-5ccc52eebd50.png". You can overwrite the `get_object_name` method of the `GetPUTSignature` and `GetPUTPublicSignature`.
 
 
 .. note::
