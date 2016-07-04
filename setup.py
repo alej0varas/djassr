@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name="django-assr",
+    name="djassr",
     version=__import__('djassr').__version__,
     author="Alexandre Varas",
     author_email="alej0varas@gmail.com",
