@@ -15,9 +15,7 @@ DEFAULT_VALID = 60  # seconds
 class BaseGetSignature(generics.GenericAPIView):
     def post(self, request):
         args = self._get_args(request)
-        valid = self.get_valid(request)
         signer = self.signer()
-        args = list(args) + [valid]
         data = signer.get_signed_url(*args)
         return Response(data)
 
@@ -31,7 +29,8 @@ class BaseGetPUTSigneature(BaseGetSignature):
     def _get_args(self, request):
         file_name = self.get_object_name(request)
         mime_type = request.POST.get('mime_type')
-        return file_name, mime_type
+        valid = self.get_valid(request)
+        return file_name, valid, mime_type
 
     def get_object_name(self, request):
         file_name = request.POST.get('file_name')
@@ -56,4 +55,5 @@ class GetGETSignature(BaseGetSignature):
     signer = s3sign.S3GETSigner
 
     def _get_args(self, request):
-        return (request.POST.get('object_name'), )
+        valid = self.get_valid(request)
+        return request.POST.get('object_name'), valid

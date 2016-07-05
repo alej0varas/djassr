@@ -24,16 +24,12 @@ class APIViewsTestCase(TestCase):
                 'mime_type': 'a-mime/type'}
         request = self.factory.post('/the-view/', data=data)
 
-        with patch('djassr.views.s3sign.S3PUTSigner.get_signed_url') as mock_signer:
-            with patch('djassr.views.uuid.uuid4') as mock_uuid:
-                mock_signer.return_value = {'canary': True}
-                mock_uuid.return_value = object_name
-                response = view(request)
+        with patch('djassr.views.uuid.uuid4') as mock_uuid:
+            mock_uuid.return_value = object_name
+            response = view(request)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('canary', response.data)
-        mock_signer.assert_called_once_with(
-            object_name + file_name_extension, data['mime_type'], views.DEFAULT_VALID)
+        self.assertEqual(response.data['object_name'], object_name + file_name_extension)
 
     def test_get_PUT_public_signature(self):
         view = views.GetPUTPublicSignature.as_view()
@@ -43,16 +39,11 @@ class APIViewsTestCase(TestCase):
                 'mime_type': 'a-mime/type'}
         request = self.factory.post('/the-view/', data=data)
 
-        with patch('djassr.views.s3sign.S3PUTPublicSigner.get_signed_url') as mock_signer:
-            with patch('djassr.views.uuid.uuid4') as mock_uuid:
-                mock_signer.return_value = {'canary': True}
-                mock_uuid.return_value = object_name
-                response = view(request)
+        with patch('djassr.views.uuid.uuid4') as mock_uuid:
+            mock_uuid.return_value = object_name
+            response = view(request)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('canary', response.data)
-        mock_signer.assert_called_once_with(
-            object_name + file_name_extension, data['mime_type'], views.DEFAULT_VALID)
 
     def test_get_GET_signature(self):
         view = views.GetGETSignature.as_view()
@@ -60,10 +51,6 @@ class APIViewsTestCase(TestCase):
         data = {'object_name': object_name}
         request = self.factory.post('/the-view/', data=data)
 
-        with patch('djassr.views.s3sign.S3GETSigner.get_signed_url') as mock_signer:
-            mock_signer.return_value = {'canary': True}
-            response = view(request)
+        response = view(request)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('canary', response.data)
-        mock_signer.assert_called_once_with(object_name, views.DEFAULT_VALID)
