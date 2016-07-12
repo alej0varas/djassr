@@ -28,12 +28,12 @@ class BaseGetPUTSigneature(BaseGetSignature):
 
     def _get_args(self, request):
         file_name = self.get_object_name(request)
-        mime_type = request.POST.get('mime_type')
+        mime_type = request.data.get('mime_type')
         valid = self.get_valid(request)
         return file_name, valid, mime_type
 
     def get_object_name(self, request):
-        file_name = request.POST.get('file_name')
+        file_name = request.data.get('file_name')
         extension = file_name.split('.')[-1]
         file_name = str(uuid.uuid4()) + '.' + extension
         object_name = urllib.parse.quote_plus(file_name)
@@ -56,4 +56,4 @@ class GetGETSignature(BaseGetSignature):
 
     def _get_args(self, request):
         valid = self.get_valid(request)
-        return request.POST.get('object_name'), valid
+        return request.data.get('object_name'), valid
