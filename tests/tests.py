@@ -54,3 +54,16 @@ class APIViewsTestCase(TestCase):
         response = view(request)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_PUT_signature_optional_filename(self):
+        view = views.GetPUTSignature.as_view()
+        object_name = 'filename-uuid'
+        data = {'mime_type': 'a-mime/type'}
+        request = self.factory.post('/the-view/', data=data)
+
+        with patch('djassr.views.uuid.uuid4') as mock_uuid:
+            mock_uuid.return_value = object_name
+            response = view(request)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['object_name'], object_name)

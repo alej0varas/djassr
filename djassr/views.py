@@ -34,9 +34,11 @@ class BaseGetPUTSigneature(BaseGetSignature):
 
     def get_object_name(self, request):
         file_name = request.data.get('file_name')
-        extension = file_name.split('.')[-1]
-        file_name = str(uuid.uuid4()) + '.' + extension
-        object_name = urllib.parse.quote_plus(file_name)
+        new_file_name = str(uuid.uuid4())
+        if file_name:
+            new_file_name += '.' + file_name.split('.')[-1]
+
+        object_name = urllib.parse.quote_plus(new_file_name)
         return object_name
 
 
