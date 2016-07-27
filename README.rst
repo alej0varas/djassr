@@ -1,3 +1,7 @@
+========
+ Djassr
+========
+
 Django rest framework views to get a S3 signed url to PUT or GET to AWS S3
 
 .. note::
@@ -18,7 +22,7 @@ Example `views.py`
 
 
 .. note::
-   The duration of the link is by default 60 seconds. To change this you can overwrite the `get_valid` method for the signature class. It must return an integer wich is the time in seconds the link will be valid.
+   The duration of the link is by default 60 seconds. To change this you can set `DJASSR_DEFAULT_EXPIRE` in your `settings.py` or overwrite the `get_expire` method for the signature class. The method must return an integer wich is the time in seconds the link will be valid.
 
 Install
 =======

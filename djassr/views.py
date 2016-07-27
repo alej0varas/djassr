@@ -1,6 +1,8 @@
 import urllib
 import uuid
 
+from django.conf import settings
+
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -9,7 +11,8 @@ import s3sign
 from . import serializers
 
 
-DEFAULT_VALID = 60  # seconds
+_DEFAULT_EXPIRE = 60  # seconds
+DEFAULT_EXPIRE = getattr(settings, 'DJASSR_DEFAULT_EXPIRE', _DEFAULT_EXPIRE)
 
 
 class BaseGetSignature(generics.GenericAPIView):
@@ -19,8 +22,8 @@ class BaseGetSignature(generics.GenericAPIView):
         data = signer.get_signed_url(*args)
         return Response(data)
 
-    def get_valid(self, request):
-        return DEFAULT_VALID
+    def get_expire(self, request):
+        return DEFAULT_EXPIRE
 
 
 class BaseGetPUTSigneature(BaseGetSignature):
@@ -29,8 +32,8 @@ class BaseGetPUTSigneature(BaseGetSignature):
     def _get_args(self, request):
         file_name = self.get_object_name(request)
         mime_type = request.data.get('mime_type')
-        valid = self.get_valid(request)
-        return file_name, valid, mime_type
+        expire = self.get_expire(request)
+        return file_name, expire, mime_type
 
     def get_object_name(self, request):
         file_name = request.data.get('file_name')
@@ -57,5 +60,5 @@ class GetGETSignature(BaseGetSignature):
     signer = s3sign.S3GETSigner
 
     def _get_args(self, request):
-        valid = self.get_valid(request)
-        return request.data.get('object_name'), valid
+        expire = self.get_expire(request)
+        return request.data.get('object_name'), expire
