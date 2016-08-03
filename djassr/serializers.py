@@ -7,4 +7,4 @@ class PUTSignatureSerializer(serializers.Serializer):
 
 
 class GETSignatureSerializer(serializers.Serializer):
-    url = serializers.CharField()
+    object_name = serializers.CharField()
