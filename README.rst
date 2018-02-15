@@ -55,3 +55,10 @@ You can look at and run the demo project.
    python manage.py runserver
 
 Go to http://localhost:8000/api/
+
+
+Running Tests
+=============
+::
+
+   python runtests.py [tests.<tests_module>[.<TestClass>[.<test_method>]]]
