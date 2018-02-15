@@ -1,4 +1,4 @@
 -r requirements.txt
-tox=2.3.1
-django==1.9
-djangorestframework==3.3.3
+tox==2.3.1
+django<2.1
+djangorestframework<4

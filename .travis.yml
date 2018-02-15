@@ -1,0 +1,11 @@
+sudo: false
+language: python
+script: tox
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+install: pip install tox-travis
+env:
+  - AWS_SECRET_ACCESS_KEY=fake-secret AWS_ACCESS_KEY_ID=fake-key

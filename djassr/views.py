@@ -1,4 +1,7 @@
-import urllib
+try:
+    from urllib.parse import quote_plus
+except ImportError:
+    from urllib import quote_plus
 import uuid
 import os
 import time
@@ -109,7 +112,7 @@ class GetPUTSignature(BaseGetSignature):
         if object_name:
             new_file_name += '.' + object_name.split('.')[-1]
 
-        object_name = urllib.parse.quote_plus(new_file_name)
+        object_name = quote_plus(new_file_name)
         return object_name
 
     def get_params(self, data):

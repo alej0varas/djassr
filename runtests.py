@@ -12,7 +12,7 @@ def main():
     os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.settings'
     django.setup()
 
-    if sys.argv[0] == 'runtests.py' and len(sys.argv) == 2:
+    if 'runtests.py' in sys.argv[0] and len(sys.argv) == 2:
         suite = [sys.argv[1]]
     else:
         suite = ['tests']

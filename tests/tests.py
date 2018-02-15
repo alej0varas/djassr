@@ -1,4 +1,7 @@
-from unittest import mock
+try:
+    from unittest import mock
+except ImportError:
+    import mock
 import os
 
 from django.test import TestCase
@@ -60,7 +63,7 @@ class APIViewsTestCase(TestCase):
         data = {'mime_type': 'a-mime/type'}
         request = self.factory.post('/the-view/', data=data)
 
-        with mock.patch.object(view.view_class, 'custom_post', autospec=True) as mock_method:
+        with mock.patch.object(CustomS3PUTSignatureAPIView, 'custom_post', autospec=True) as mock_method:
             view(request)
 
-        mock_method.assert_called_once()
+        self.assertEqual(mock_method.call_count, 1)
