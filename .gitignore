@@ -3,6 +3,7 @@
 /.eggs/
 /README.pdf
 /__pycache__/
+/build/
 /dist/
 /djassr.egg-info/
 /.tox/
