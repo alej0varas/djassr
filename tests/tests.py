@@ -33,6 +33,10 @@ class APIViewsTestCase(TestCase):
             response = view(request)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIsNotNone(response.data['signed_url'])
+        self.assertIsNotNone(response.data['url'])
+        self.assertIsNotNone(response.data['headers'])
+        self.assertIsNotNone(response.data['object_name'])
         self.assertEqual(response.data['object_name'], object_name + file_name_extension)
 
     def test_get_GET_signature(self):
@@ -44,6 +48,7 @@ class APIViewsTestCase(TestCase):
         response = view(request)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIsNotNone(response.data['signed_url'])
 
     def test_get_PUT_signature_optional_filename(self):
         view = views.GetPUTSignature.as_view()
