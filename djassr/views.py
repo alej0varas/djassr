@@ -32,7 +32,7 @@ class BaseGetSignature(generics.CreateAPIView):
             pass
 
     def _get_expires(self, valid):
-        return int(time.time() + int(valid))
+        return int(valid)
 
     def _get_object_name_base(self, data):
         return data.get(self.object_name_key)
