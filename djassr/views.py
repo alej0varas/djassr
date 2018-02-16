@@ -102,10 +102,9 @@ class GetPUTSignature(BaseGetSignature):
     def _get_mime_type(self, data):
         return data['mime_type']
 
-    def _get_url(self, object_name):
-        # url = self.url.format(self._bucket_name, object_name)
-        # return url
-        pass
+    def _get_url(self, signed_url):
+        url = signed_url.split('?', 1)[0]
+        return url
 
     def get_object_name(self, object_name):
         new_file_name = str(uuid.uuid4())
@@ -128,7 +127,7 @@ class GetPUTSignature(BaseGetSignature):
     def get_signed_url(self, data, signed_url, object_name):
         signed_url.update({
             'headers': self._get_headers(self._get_mime_type(data)),
-            'url': self._get_url(object_name),
+            'url': self._get_url(signed_url['signed_url']),
             'object_name': object_name
         })
         return signed_url
