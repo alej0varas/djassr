@@ -54,9 +54,12 @@ class BaseGetSignature(generics.CreateAPIView):
         return self.get_signed_url(*self._get_signed_url_base(data))
 
     def _get_signed_url_base(self, data):
+        customize_object_name_method = getattr(self, 'customize_object_name', None)
         object_name = self.get_object_name(
             self._get_object_name_base(data)
         )
+        if customize_object_name_method is not None:
+            object_name = customize_object_name_method(object_name)
         expires = self.get_expires()
         signed_url = self._get_signature(data, object_name, expires)
         signed_url = {'signed_url': signed_url}

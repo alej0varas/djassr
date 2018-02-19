@@ -72,3 +72,14 @@ class APIViewsTestCase(TestCase):
             view(request)
 
         self.assertEqual(mock_method.call_count, 1)
+
+    def test_call_customize_object_name(self):
+        view = CustomS3PUTSignatureAPIView.as_view()
+        data = {'mime_type': 'a-mime/type'}
+        request = self.factory.post('/the-view/', data=data)
+
+        with mock.patch.object(CustomS3PUTSignatureAPIView, 'customize_object_name', autospec=True) as mock_method:
+            mock_method.return_value = 'customized'
+            view(request)
+
+        self.assertEqual(mock_method.call_count, 1)
